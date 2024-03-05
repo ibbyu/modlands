@@ -18,3 +18,12 @@ export async function getUserByEmail(email: string) {
 export async function createUser(username: string, email: string, hashedPassword: string) {
   await db.insert(users).values({ name: username, email: email, password: hashedPassword, id: uuidv4() });
 }
+
+export async function getUserByUsernameIncludeMods(username: string) {
+  return await db.query.users.findFirst({
+    where: (users, { eq }) => eq(users.name, username),
+    with: {
+      mods: true
+    }
+  });
+}
