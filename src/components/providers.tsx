@@ -1,12 +1,15 @@
 "use client";
 import React from 'react';
 import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <SessionProvider>
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
       </SessionProvider>
     </>
   );

@@ -6,7 +6,8 @@ import { useSession } from 'next-auth/react';
 
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import NavAvatar from "../../../components/nav-avatar";
+import NavAvatar from "@/components/nav-avatar";
+import ToggleTheme from '@/components/toggle-theme';
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -27,11 +28,12 @@ const Navbar = () => {
           {status === "authenticated" ?
             <div className='flex gap-10'>
               <Link href="/dashboard" className={buttonVariants({ variant: "default" })}>Dashboard</Link>
-              <NavAvatar avatar={session.user.image} username={session.user.name}/>
+              <NavAvatar avatar={session.user.image} username={session.user.name} />
             </div> :
             <div className='flex gap-4'>
               <Link href="/sign-in" className={buttonVariants({ variant: "outline" })}>Sign in</Link>
             </div>}
+            <ToggleTheme />
         </div>
       </div>
     </header>
