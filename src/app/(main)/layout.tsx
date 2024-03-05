@@ -1,4 +1,5 @@
 import React from 'react';
+import Navbar from './_components/nav-bar';
 
 const MainLayout = ({
   children,
@@ -7,6 +8,7 @@ const MainLayout = ({
 }) => {
   return (
     <>
+      <Navbar />
       <div className="container max-w-7xl mx-auto">
         {children}
       </div>
