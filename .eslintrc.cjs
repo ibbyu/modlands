@@ -32,6 +32,9 @@ const config = {
       },
     ],
     "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-unsafe-assignment": "warn",
+    "@typescript-eslint/no-unsafe-call": "warn",
+    
   },
 };
 
