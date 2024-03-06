@@ -16,7 +16,13 @@ export async function getUserByEmail(email: string) {
 }
 
 export async function createUser(username: string, email: string, hashedPassword: string) {
-  await db.insert(users).values({ name: username, email: email, password: hashedPassword, id: uuidv4() });
+  await db.insert(users).values({
+    id: uuidv4(),
+    name: username,
+    email: email,
+    password: hashedPassword,
+    emailVerified: null,
+  });
 }
 
 export async function getUserByUsernameIncludeMods(username: string) {
