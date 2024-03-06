@@ -55,7 +55,6 @@ const SignInForm = () => {
       console.error(e);
     }
     finally {
-      form.reset();
       setLoading(false);
     }
   }
