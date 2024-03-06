@@ -119,12 +119,12 @@ export const mods = createTable("mod", {
     mode: "date",
     fsp: 3,
   }).default(sql`CURRENT_TIMESTAMP(3)`).notNull(),
-  downloads: int("downloads").default(0),
+  downloads: int("downloads").default(0).notNull(),
   ownerId: varchar("ownerId", { length: 255 }),
 });
 
 export const modRelations = relations(mods, ({ one }) => ({
-  author: one(users, {
+  owner: one(users, {
     fields: [mods.ownerId],
     references: [users.id],
   }),
