@@ -29,3 +29,7 @@ export async function createMod(name: string, slug: string, ownerId: string, sum
 export async function deleteModById(id: string) {
   await db.delete(mods).where(eq(mods.id, id));
 }
+
+export async function updateModSummaryById(id: string, summary: string) {
+  await db.update(mods).set({ summary }).where(eq(mods.id, id));
+}

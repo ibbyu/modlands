@@ -2,6 +2,7 @@ import React from 'react';
 import { getServerAuthSession } from '@/server/auth';
 import { getModBySlug } from '@/server/data/mod';
 import DeleteModCard from './_components/delete-mod-card';
+import UpdateModSummaryCard from './_components/update-mod-summary-card';
 
 interface Props {
   params: {
@@ -28,6 +29,7 @@ const DashboardModSettingsPage = async ({ params }: Props) => {
   return (
     <>
       <h1 className='text-2xl'>Settings</h1>
+      <UpdateModSummaryCard modId={mod.id} summary={mod.summary} />
       <div className='flex flex-col gap-4 pt-6'>
         <DeleteModCard modId={mod.id} />
       </div>
