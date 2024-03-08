@@ -91,9 +91,9 @@ export const users = createTable("user", {
   emailVerified: timestamp("emailVerified", {
     mode: "date",
   }).default(sql`CURRENT_TIMESTAMP`),
-  createAt: timestamp("createAt", {
+  createdAt: timestamp("createdAt", {
     mode: "date",
-  }).default(sql`CURRENT_TIMESTAMP`),
+  }).default(sql`CURRENT_TIMESTAMP`).notNull(),
   image: varchar("image", { length: 255 }),
   password: varchar("password", { length: 255 })
 });
