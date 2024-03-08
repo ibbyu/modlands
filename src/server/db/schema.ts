@@ -1,16 +1,16 @@
 import { relations, sql } from "drizzle-orm";
 import {
-  bigint,
-  boolean,
   index,
-  int,
-  json,
-  mysqlTableCreator,
+  integer,
+  pgTableCreator,
   primaryKey,
+  serial,
   text,
   timestamp,
   varchar,
-} from "drizzle-orm/mysql-core";
+  json,
+  boolean,
+} from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
 /**
@@ -19,12 +19,14 @@ import { type AdapterAccount } from "next-auth/adapters";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = mysqlTableCreator((name) => `modlands_${name}`);
+export const createTable = pgTableCreator((name) => `modlands_${name}`);
 
 export const accounts = createTable(
   "account",
   {
-    userId: varchar("userId", { length: 255 }).notNull(),
+    userId: varchar("userId", { length: 255 })
+      .notNull()
+      .references(() => users.id),
     type: varchar("type", { length: 255 })
       .$type<AdapterAccount["type"]>()
       .notNull(),
@@ -32,7 +34,7 @@ export const accounts = createTable(
     providerAccountId: varchar("providerAccountId", { length: 255 }).notNull(),
     refresh_token: text("refresh_token"),
     access_token: text("access_token"),
-    expires_at: int("expires_at"),
+    expires_at: integer("expires_at"),
     token_type: varchar("token_type", { length: 255 }),
     scope: varchar("scope", { length: 255 }),
     id_token: text("id_token"),
@@ -42,7 +44,7 @@ export const accounts = createTable(
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId],
     }),
-    userIdIdx: index("accounts_userId_idx").on(account.userId),
+    userIdIdx: index("account_userId_idx").on(account.userId),
   })
 );
 
@@ -56,7 +58,9 @@ export const sessions = createTable(
     sessionToken: varchar("sessionToken", { length: 255 })
       .notNull()
       .primaryKey(),
-    userId: varchar("userId", { length: 255 }).notNull(),
+    userId: varchar("userId", { length: 255 })
+      .notNull()
+      .references(() => users.id),
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (session) => ({
@@ -83,16 +87,14 @@ export const verificationTokens = createTable(
 export const users = createTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   name: varchar("name", { length: 255 }).unique().notNull(),
-  email: varchar("email", { length: 255 }).unique().notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
   emailVerified: timestamp("emailVerified", {
     mode: "date",
-    fsp: 3,
-  }).default(sql`CURRENT_TIMESTAMP(3)`),
-  image: varchar("image", { length: 255 }),
-  createdAt: timestamp("createdAt", {
+  }).default(sql`CURRENT_TIMESTAMP`),
+  createAt: timestamp("createAt", {
     mode: "date",
-    fsp: 3,
-  }).default(sql`CURRENT_TIMESTAMP(3)`).notNull(),
+  }).default(sql`CURRENT_TIMESTAMP`),
+  image: varchar("image", { length: 255 }),
   password: varchar("password", { length: 255 })
 });
 
@@ -113,13 +115,11 @@ export const mods = createTable("mod", {
   approved: boolean("approved").default(false),
   createdAt: timestamp("createdAt", {
     mode: "date",
-    fsp: 3,
   }).default(sql`CURRENT_TIMESTAMP(3)`).notNull(),
   updatedAt: timestamp("updatedAt", {
     mode: "date",
-    fsp: 3,
   }).default(sql`CURRENT_TIMESTAMP(3)`).notNull(),
-  downloads: int("downloads").default(0).notNull(),
+  downloads: integer("downloads").default(0).notNull(),
   ownerId: varchar("ownerId", { length: 255 }),
 });
 
