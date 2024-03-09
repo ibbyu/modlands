@@ -111,8 +111,8 @@ export const mods = createTable("mod", {
   summary: text("summary").notNull(),
   icon: varchar("image", { length: 255 }),
   description: json("description"),
-  draft: boolean("draft").default(true),
-  approved: boolean("approved").default(false),
+  draft: boolean("draft").default(true).notNull(),
+  approved: boolean("approved").default(false).notNull(),
   createdAt: timestamp("createdAt", {
     mode: "date",
   }).default(sql`CURRENT_TIMESTAMP(3)`).notNull(),

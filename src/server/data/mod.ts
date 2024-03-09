@@ -48,3 +48,12 @@ export async function getModsByQueryNameIncludeOwner(query: string | undefined, 
 export async function updateModDescriptionById(id: string, description: any) {
   void await db.update(mods).set({ description }).where(eq(mods.id, id));
 }
+
+export async function getModBySlugWithOwner(slug: string) {
+  return await db.query.mods.findFirst({
+    where: (mods, { eq }) => eq(mods.slug, slug),
+    with: {
+      owner: true
+    }
+  });
+}
