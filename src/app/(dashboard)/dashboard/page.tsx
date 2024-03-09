@@ -3,7 +3,7 @@ import { getServerAuthSession } from '@/server/auth';
 import React from 'react';
 import ModCard from './_components/mod-card';
 import { buttonVariants } from '@/components/ui/button';
-import { getUserByUsernameIncludeMods } from '@/server/data/user';
+import { getUserByUsernameWithMods } from '@/server/data/user';
 import { redirect } from 'next/navigation';
 
 const Dashboard = async () => {
@@ -13,7 +13,7 @@ const Dashboard = async () => {
     redirect("/login");
   }
 
-  const user = await getUserByUsernameIncludeMods(session.user.name);
+  const user = await getUserByUsernameWithMods(session.user.name);
 
   return (
     <div className="container max-w-7xl mx-auto">

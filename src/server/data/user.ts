@@ -25,7 +25,7 @@ export async function createUser(username: string, email: string, hashedPassword
   });
 }
 
-export async function getUserByUsernameIncludeMods(username: string) {
+export async function getUserByUsernameWithMods(username: string) {
   return await db.query.users.findFirst({
     where: (users, { eq }) => eq(users.name, username),
     with: {
