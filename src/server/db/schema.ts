@@ -128,4 +128,21 @@ export const modRelations = relations(mods, ({ one }) => ({
     fields: [mods.ownerId],
     references: [users.id],
   }),
+  modExternalResources: one(modExternalResources)
+}));
+
+export const modExternalResources = createTable("modExternalResources", {
+  id: varchar("id", { length: 255 }).notNull().primaryKey(),
+  issues: varchar("issues", { length: 255 }),
+  source: varchar("source", { length: 255 }),
+  wiki: varchar("wiki", { length: 255 }),
+  discord: varchar("disord", { length: 255 }),
+  modId: varchar("modId", { length: 255}).notNull().unique()
+});
+
+export const modExternalResourcesRelations = relations(modExternalResources, ({ one }) => ({
+  mod: one(mods, {
+    fields: [modExternalResources.modId],
+    references: [mods.id]
+  })
 }));

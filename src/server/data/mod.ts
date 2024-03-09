@@ -57,3 +57,22 @@ export async function getModBySlugWithOwner(slug: string) {
     }
   });
 }
+
+export async function getModBySlugWithOwnerWithExternalResources(slug: string) {
+  return await db.query.mods.findFirst({
+    where: (mods, { eq }) => eq(mods.slug, slug),
+    with: {
+      owner: true,
+      modExternalResources: true
+    }
+  });
+}
+
+export async function getModBySlugExternalResources(slug: string) {
+  return await db.query.mods.findFirst({
+    where: (mods, { eq }) => eq(mods.slug, slug),
+    with: {
+      modExternalResources: true
+    }
+  });
+}

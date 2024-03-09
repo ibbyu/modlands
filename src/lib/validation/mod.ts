@@ -12,3 +12,11 @@ export const updateModSummarySchema = z.object({
 export const updateDescriptionSchema = z.object({
   description: z.any()
 });
+
+export const updateExternalResourcesSchema = z.object({
+  modExternalResourcesId: z.string().nullish(),
+  issues: z.string().url().optional().or(z.literal('')),
+  source: z.string().url().optional().or(z.literal('')),
+  wiki: z.string().url().optional().or(z.literal('')),
+  discord: z.string().url().optional().or(z.literal(''))
+});

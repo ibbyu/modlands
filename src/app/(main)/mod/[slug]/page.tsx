@@ -3,9 +3,9 @@ import React from 'react'
 import InfoCard from './_components/info-card';
 import Navbar from './_components/navbar';
 import MembersCard from './_components/members-card';
-/* import ExternalResourcesCard from './_components/external-resources-card'; */
+import ExternalResourcesCard from './_components/external-resources-card';
 import Tiptap from '@/components/tiptap';
-import { getModBySlug, getModBySlugWithOwner } from '@/server/data/mod';
+import { getModBySlug, getModBySlugWithOwnerWithExternalResources } from '@/server/data/mod';
 
 interface Props {
   params: {
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props) {
 }
 
 const ModPage = async ({ params }: Props) => {
-  const mod = await getModBySlugWithOwner(params.slug);
+  const mod = await getModBySlugWithOwnerWithExternalResources(params.slug);
 
   if (!mod?.owner) {
     return <div className='w-full flex h-full justify-center items-center'>Mod not found</div>;
@@ -44,12 +44,12 @@ const ModPage = async ({ params }: Props) => {
           slug={mod.slug}
         />
         <div className='row-start-3 flex flex-col gap-4'>
-          {/* <ExternalResources
-            issues={mod.externalResources?.issues}
-            source={mod.externalResources?.source}
-            wiki={mod.externalResources?.wiki}
-            discord={mod.externalResources?.discord}
-          /> */}
+          <ExternalResourcesCard
+            issues={mod.modExternalResources?.issues}
+            source={mod.modExternalResources?.source}
+            wiki={mod.modExternalResources?.wiki}
+            discord={mod.modExternalResources?.discord}
+          />
           <MembersCard name={mod.owner.name} avatar={mod.owner.image} />
         </div>
       </div>
