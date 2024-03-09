@@ -43,3 +43,8 @@ export async function getModsByQueryNameIncludeOwner(query: string | undefined, 
     }
   });
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function updateModDescriptionById(id: string, description: any) {
+  void await db.update(mods).set({ description }).where(eq(mods.id, id));
+}

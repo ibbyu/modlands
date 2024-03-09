@@ -8,3 +8,7 @@ export const createModSchema = z.object({
 export const updateModSummarySchema = z.object({
   summary: z.string().min(1, { message: "Summary required"})
 });
+
+export const updateDescriptionSchema = z.object({
+  description: z.any()
+});
