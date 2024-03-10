@@ -26,6 +26,7 @@ import TextAlign from '@tiptap/extension-text-align';
 import Placeholder from '@tiptap/extension-placeholder';
 
 import { Toggle } from '@/components/ui/toggle';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
   defaultValue?: string;
@@ -77,8 +78,8 @@ const Tiptap = ({ defaultValue, onChange, editable, placeholder, className }: Pr
     editable: !!editable
   });
 
-  if (!editor && editable) {
-    return <div>loading tiptap</div> // TODO: Add tiptap skeleton loader
+  if (!editor) {
+    return <EditorSkeleton />
   }
 
   return (
@@ -141,6 +142,15 @@ const Toolbar = ({ editor }: ToolbarProps) => {
       <Toggle size="sm" pressed={editor.isActive({ textAlign: 'right' })} onPressedChange={() => editor.chain().focus().setTextAlign('right').run()}>
         <AlignRightIcon size={ICON_SIZE} />
       </Toggle>
+    </div>
+  );
+}
+
+const EditorSkeleton = () => {
+  return (
+    <div className='flex flex-col justify-stretch gap-4'>
+      <Skeleton className='rounded-2xl p-2 h-10 w-4/6'/>
+      <Skeleton className='rounded-2xl p-4 min-h-96'/>
     </div>
   );
 }
