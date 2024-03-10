@@ -28,7 +28,7 @@ interface Props {
 const InfoCard = ({ modId, icon, name, summary, downloads, createdAtTimeStamp, updatedAtTimeStamp, approved, draft, slug }: Props) => {
   return (
     <Card className='md:flex flex-col border-accent border rounded-2xl md:col-span-2 gap-2'>
-      <CardHeader className='flex flex-col gap-2'>
+      <CardHeader className='flex flex-col gap-2 pb-0'>
         <CardTitle>
           <div>
             <ModIcon icon={icon} className='w-24' />

@@ -92,7 +92,9 @@ const CreateModForm = () => {
             </FormItem>
           )}
         />
-        <Button>{loading ? <Loader2 className='animate-spin' /> : "Create"}</Button>
+        <div className='w-full flex justify-end'>
+          <Button>{loading ? <Loader2 className='animate-spin' /> : "Create mod"}</Button>
+        </div>
         {message && <div className='w-full flex justify-center items-center'><span className='text-red-600 font-bold'>{message}</span></div>}
       </form>
     </Form>

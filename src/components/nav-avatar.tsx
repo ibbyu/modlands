@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { signOut } from 'next-auth/react';
-import { LogOut as LogOutIcon, User2 as UserIcon } from 'lucide-react';
+import { BarChart2Icon, LogOut as LogOutIcon, User2 as UserIcon } from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -35,6 +35,13 @@ const NavAvatar = ({ username, avatar }: Props) => {
           <DropdownMenuItem className='hover:cursor-pointer hover:bg-accent'>
             <UserIcon className="mr-2 h-4 w-4" />
             <span>Profile</span>
+          </DropdownMenuItem>
+        </Link>
+        <DropdownMenuSeparator />
+        <Link href="/dashboard">
+          <DropdownMenuItem className='hover:cursor-pointer hover:bg-accent'>
+            <BarChart2Icon className="mr-2 h-4 w-4" />
+            <span>Dashboard</span>
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />

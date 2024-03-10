@@ -29,7 +29,6 @@ const DashboardNavbar = async () => {
         <div className="flex items-center justify-end space-x-8">
           <div className='flex gap-10'>
             <NavAvatar avatar={session?.user.image} username={session?.user.name} />
-            <ToggleTheme />
           </div>
         </div>
       </div>

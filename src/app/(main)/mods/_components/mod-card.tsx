@@ -35,14 +35,14 @@ const ModCard = ({ id, slug, name, ownerName, icon, summary, downloads, updatedA
         </Link>
         <div className='flex items-end gap-2 md:col-span-3 flex-wrap'>
           <Link href={`/mod/${slug}`} className='font-bold text-2xl'>{name}</Link>
-          <span>by</span>
-          <Link href={`/user/${ownerName}`} className='underline hover:text-gray-500'>{ownerName}</Link>
+          <span className='text-muted-foreground'>by</span>
+          <Link href={`/user/${ownerName}`} className='underline text-muted-foreground hover:text-foreground'>{ownerName}</Link>
         </div>
         <div className='md:col-span-3'>
-          <p className=''>{summary ?? <span className='italic'>No summary</span>}</p>
+          <p className='text-muted-foreground'>{summary ?? <span className='italic'>No summary</span>}</p>
         </div>
-        <div className='flex items-center gap-2 md:col-span-2'><Download size={16} /><span className='font-bold'>{downloads}</span> downloads</div>
-        <div className='md:col-start-3'>
+        <div className='flex items-center gap-2 md:col-span-2 text-muted-foreground'><Download size={16} /><span className='font-bold'>{downloads}</span> downloads</div>
+        <div className='md:col-start-3 text-muted-foreground'>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger className='hover:cursor-default'>

@@ -21,19 +21,17 @@ const Navbar = () => {
             <span className="font-extrabold text-foreground">modlands</span>
           </Link>
           <Link href="/mods" >
-            <span className={cn("font-semibold text-primary underline-offset-4 hover:underline", pathname === "/mods" ? "underline" : "")}>Mods</span>
+            <span className={cn("font-semibold text-lg text-muted-foreground underline-offset-4 hover:underline hover:text-foreground", pathname === "/mods" ? "underline text-foreground" : "")}>Mods</span>
           </Link>
         </div>
         <div className="flex items-center justify-end space-x-8">
           {status === "authenticated" ?
             <div className='flex gap-10'>
-              <Link href="/dashboard" className={buttonVariants({ variant: "default" })}>Dashboard</Link>
               <NavAvatar avatar={session.user.image} username={session.user.name} />
             </div> :
             <div className='flex gap-4'>
               <Link href="/sign-in" className={buttonVariants({ variant: "outline" })}>Sign in</Link>
             </div>}
-            <ToggleTheme />
         </div>
       </div>
     </header>
