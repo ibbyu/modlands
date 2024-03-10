@@ -1,6 +1,7 @@
 import React from 'react';
 import { getServerAuthSession } from '@/server/auth';
 import { getModBySlug, getModBySlugExternalResources } from '@/server/data/mod';
+import UpdateIconCard from './_components/update-icon-card';
 import UpdateModSummaryCard from './_components/update-mod-summary-card';
 import UpdateExternalResourcesCard from './_components/update-external-resources-card';
 import DeleteModCard from './_components/delete-mod-card';
@@ -30,6 +31,7 @@ const DashboardModSettingsPage = async ({ params }: Props) => {
   return (
     <>
       <h1 className='text-2xl'>Settings</h1>
+      <UpdateIconCard modId={mod.id} icon={mod.icon} />
       <UpdateModSummaryCard modId={mod.id} summary={mod.summary} />
       <UpdateExternalResourcesCard
           modId={mod.id} modExternalResourcesId={mod.modExternalResources?.id} 

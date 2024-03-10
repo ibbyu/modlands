@@ -20,3 +20,7 @@ export const updateExternalResourcesSchema = z.object({
   wiki: z.string().url().optional().or(z.literal('')),
   discord: z.string().url().optional().or(z.literal(''))
 });
+
+export const updateIconSchema = z.object({
+  icon: z.string().url()
+});

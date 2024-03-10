@@ -76,3 +76,7 @@ export async function getModBySlugExternalResources(slug: string) {
     }
   });
 }
+
+export async function updateModIconById(id: string, icon: string) {
+  void await db.update(mods).set({ icon }).where(eq(mods.id, id));
+}

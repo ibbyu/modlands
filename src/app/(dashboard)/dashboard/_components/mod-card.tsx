@@ -13,10 +13,10 @@ interface Props {
 
 const ModCard = ({ name, icon, summary }: Props) => {
   return (
-    <Card className=''>
-      <CardHeader>
+    <Card>
+      <CardHeader className='p-4'>
         <div className='w-full flex gap-4'>
-          <ModIcon icon={icon} className='w-16 h-16'/>
+          <ModIcon icon={icon} className='w-24 h-24'/>
           <div className='flex flex-col'>
             <div>
               {name}
