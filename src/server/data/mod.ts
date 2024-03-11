@@ -80,3 +80,16 @@ export async function getModBySlugExternalResources(slug: string) {
 export async function updateModIconById(id: string, icon: string) {
   void await db.update(mods).set({ icon }).where(eq(mods.id, id));
 }
+
+export async function updateModUpdateDateById(id: string) {
+  void await db.update(mods).set({ updatedAt: new Date() }).where(eq(mods.id, id));
+}
+
+export async function getModBySlugWithVersions(slug: string) {
+  return await db.query.mods.findFirst({
+    where: (mods, { eq }) => eq(mods.slug, slug),
+    with: {
+      versions: true
+    }
+  });
+}

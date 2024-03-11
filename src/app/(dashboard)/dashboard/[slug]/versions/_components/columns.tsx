@@ -11,12 +11,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 export type Version = {
-  id: string
-  title: string
-  published: string
-  size: string
-  type: "PythonSDK" | "Text" | "BLCMM"
-  downloads: number
+  id: string;
+  type: "PythonSDK" | "Text" | "BLCM";
+  description: unknown;
+  downloads: number;
+  modId: string;
+  title: string;
+  downloadUrl: string;
+  published: Date;
+  size: number;
 }
 
 export const columns: ColumnDef<Version>[] = [

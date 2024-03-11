@@ -10,6 +10,7 @@ import {
   varchar,
   json,
   boolean,
+  pgEnum,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
@@ -123,12 +124,13 @@ export const mods = createTable("mod", {
   ownerId: varchar("ownerId", { length: 255 }),
 });
 
-export const modRelations = relations(mods, ({ one }) => ({
+export const modRelations = relations(mods, ({ one, many }) => ({
   owner: one(users, {
     fields: [mods.ownerId],
     references: [users.id],
   }),
-  modExternalResources: one(modExternalResources)
+  modExternalResources: one(modExternalResources),
+  versions: many(versions)
 }));
 
 export const modExternalResources = createTable("modExternalResources", {
@@ -146,3 +148,27 @@ export const modExternalResourcesRelations = relations(modExternalResources, ({ 
     references: [mods.id]
   })
 }));
+
+export const modTypeEnum = pgEnum('modType', ['PythonSDK', 'Text', 'BLCM']);
+
+
+export const versions = createTable("version", {
+  id: varchar("id", { length: 255 }).notNull().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  type: modTypeEnum("type").notNull(),
+  description: json("description").notNull(),
+  downloadUrl: varchar("downloadUrl", { length: 255 }).notNull(),
+  modId: varchar("modId", { length: 255}).notNull(),
+  published: timestamp("published", {
+    mode: "date",
+  }).default(sql`CURRENT_TIMESTAMP`).notNull(),
+  size: integer("size").notNull(),
+  downloads: integer("downloads").default(0).notNull()
+});
+
+export const versionRelations = relations(versions, ({ one }) => ({
+  mod: one(mods, {
+    fields: [versions.modId],
+    references: [mods.id]
+  })
+}))
