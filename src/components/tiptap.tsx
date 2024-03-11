@@ -79,7 +79,7 @@ const Tiptap = ({ defaultValue, onChange, editable, placeholder, className }: Pr
   });
 
   if (!editor) {
-    return <EditorSkeleton />
+    return <EditorSkeleton toolbar={editable}/>
   }
 
   return (
@@ -146,10 +146,10 @@ const Toolbar = ({ editor }: ToolbarProps) => {
   );
 }
 
-const EditorSkeleton = () => {
+const EditorSkeleton = ({ toolbar } : { toolbar: boolean | undefined }) => {
   return (
     <div className='flex flex-col justify-stretch gap-4'>
-      <Skeleton className='rounded-2xl p-2 h-10 w-4/6'/>
+      {toolbar && <Skeleton className='rounded-2xl p-2 h-10 w-4/6'/>}
       <Skeleton className='rounded-2xl p-4 min-h-96'/>
     </div>
   );

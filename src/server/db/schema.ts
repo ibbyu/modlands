@@ -151,7 +151,6 @@ export const modExternalResourcesRelations = relations(modExternalResources, ({ 
 
 export const modTypeEnum = pgEnum('modType', ['PythonSDK', 'Text', 'BLCM']);
 
-
 export const versions = createTable("version", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   title: varchar("title", { length: 255 }).notNull(),

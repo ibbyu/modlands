@@ -13,14 +13,14 @@ interface Props {
 const Navbar = ({ slug } : Props) => {
   const pathname = usePathname();
   const DESCRIPTION_PATH = `/mod/${slug}`;
-  const RELEASES_PATH = `/mod/${slug}/releases`;
+  const RELEASES_PATH = `/mod/${slug}/versions`;
   const GALLERY_PATH = `/mod/${slug}/gallery`;
   
   return (
     <div className='flex gap-2'>
       <Link href={DESCRIPTION_PATH} className={cn(buttonVariants({ variant: "link" }), pathname === DESCRIPTION_PATH ? "underline" : "")}>Description</Link>
-      <Link href={RELEASES_PATH} className={cn(buttonVariants({ variant: "link" }), pathname === RELEASES_PATH ? "underline" : "")}>Releases</Link>
       <Link href={GALLERY_PATH} className={cn(buttonVariants({ variant: "link" }), pathname === GALLERY_PATH ? "underline" : "")}>Gallery</Link>
+      <Link href={RELEASES_PATH} className={cn(buttonVariants({ variant: "link" }), pathname === RELEASES_PATH ? "underline" : "")}>Versions</Link>
     </div>
   );
 }
