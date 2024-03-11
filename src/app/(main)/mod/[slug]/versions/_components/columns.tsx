@@ -34,6 +34,9 @@ export const columns: ColumnDef<Version>[] = [
   {
     accessorKey: "published",
     header: "Published",
+    cell: ({ row }) => (
+      <div className="w-12">{new Date(row.getValue("published")).toLocaleDateString()}</div>
+    ),
   },
   {
     accessorKey: "type",

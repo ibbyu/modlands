@@ -7,8 +7,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontalIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { cn, formatBytes } from "@/lib/utils";
 
 export type Version = {
   id: string;
@@ -39,6 +41,9 @@ export const columns: ColumnDef<Version>[] = [
   {
     accessorKey: "published",
     header: "Published",
+    cell: ({ row }) => (
+      <div className="w-12">{new Date(row.getValue("published")).toLocaleDateString()}</div>
+    ),
   },
   {
     accessorKey: "type",
@@ -48,10 +53,20 @@ export const columns: ColumnDef<Version>[] = [
   {
     accessorKey: "size",
     header: "Size",
+    cell: ({ row }) => (
+      <div className="w-12">{formatBytes(row.getValue("size"))}</div>
+    ),
   },
   {
     accessorKey: "downloads",
     header: "Downloads",
+  },
+  {
+    accessorKey: "downloadUrl",
+    header: "Link",
+    cell: ({ row }) => (
+      <Link href={row.getValue("downloadUrl")} target="_blank" className={cn(buttonVariants({ variant: "link" }), "p-0")}>Download</Link>
+    ),
   },
   {
     id: "more",
