@@ -2,7 +2,7 @@
 import type { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, formatBytes } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
 export type Version = {
@@ -43,6 +43,9 @@ export const columns: ColumnDef<Version>[] = [
   {
     accessorKey: "size",
     header: "Size",
+    cell: ({ row }) => (
+      <div className="w-12">{formatBytes(row.getValue("size"))}</div>
+    ),
   },
   {
     accessorKey: "downloads",
