@@ -77,6 +77,16 @@ export async function getModBySlugExternalResources(slug: string) {
   });
 }
 
+export async function getModBySlugExternalResourcesWithTags(slug: string) {
+  return await db.query.mods.findFirst({
+    where: (mods, { eq }) => eq(mods.slug, slug),
+    with: {
+      modExternalResources: true,
+      tags: true
+    }
+  });
+}
+
 export async function updateModIconById(id: string, icon: string) {
   void await db.update(mods).set({ icon }).where(eq(mods.id, id));
 }

@@ -1,10 +1,12 @@
 import React from 'react';
 import { getServerAuthSession } from '@/server/auth';
-import { getModBySlug, getModBySlugExternalResources } from '@/server/data/mod';
+import { getModBySlug, getModBySlugExternalResourcesWithTags } from '@/server/data/mod';
 import UpdateIconCard from './_components/update-icon-card';
 import UpdateModSummaryCard from './_components/update-mod-summary-card';
 import UpdateExternalResourcesCard from './_components/update-external-resources-card';
 import DeleteModCard from './_components/delete-mod-card';
+import TagsCard from './_components/tags-card';
+import { getTags } from '@/server/data/tag';
 
 interface Props {
   params: {
@@ -22,11 +24,13 @@ export async function generateMetadata({ params }: Props) {
 
 const DashboardModSettingsPage = async ({ params }: Props) => {
   const session = await getServerAuthSession();
-  const mod = await getModBySlugExternalResources(params.slug);
+  const mod = await getModBySlugExternalResourcesWithTags(params.slug);
 
   if (!session || session.user.id !== mod?.ownerId) {
     return <div>404 not found</div>
   }
+
+  const tags = await getTags();
 
   return (
     <>
@@ -40,6 +44,7 @@ const DashboardModSettingsPage = async ({ params }: Props) => {
           wiki={mod.modExternalResources?.wiki}
           discord={mod.modExternalResources?.discord} 
         />
+      <TagsCard modId={mod.id} tags={tags} activeTags={mod.tags} />
       <div className='flex flex-col gap-4 pt-6'>
         <DeleteModCard modId={mod.id} />
       </div>

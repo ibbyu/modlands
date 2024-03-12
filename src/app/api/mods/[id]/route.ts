@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getServerAuthSession } from "@/server/auth";
-/* import { utapi } from "@/server/uploadthing"; */
+import { utapi } from "@/server/uploadthing";
 import { getModById, deleteModById } from "@/server/data/mod";
 
 export async function DELETE(request: Request, { params: { id } } : { params: { id: string } }) {
@@ -27,7 +27,7 @@ export async function DELETE(request: Request, { params: { id } } : { params: { 
 
       const key = pathSegments[pathSegments.length - 1];
 
-      /* await utapi.deleteFiles(key!); */
+      await utapi.deleteFiles(key!);
     }
 
     await deleteModById(id);

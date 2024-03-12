@@ -130,7 +130,8 @@ export const modRelations = relations(mods, ({ one, many }) => ({
     references: [users.id],
   }),
   modExternalResources: one(modExternalResources),
-  versions: many(versions)
+  versions: many(versions),
+  tags: many(tagOnMods)
 }));
 
 export const modExternalResources = createTable("modExternalResources", {
@@ -170,4 +171,29 @@ export const versionRelations = relations(versions, ({ one }) => ({
     fields: [versions.modId],
     references: [mods.id]
   })
-}))
+}));
+
+export const tags = createTable("tag", {
+  id: varchar("id", { length: 255 }).notNull().primaryKey(),
+  name: varchar("name", { length: 255}).notNull().unique(),
+});
+
+export const tagRelations = relations(tags, ({ many }) => ({
+  tagOnMods: many(tagOnMods)
+}));
+
+export const tagOnMods = createTable("tagOnMod", {
+  modId: varchar("modId", { length: 255 }).notNull(),
+  tagId: varchar("tagId", { length: 255 }).notNull()
+});
+
+export const tagOnModsRelations = relations(tagOnMods, ({ one }) => ({
+  mod: one(mods, {
+    fields: [tagOnMods.modId],
+    references: [mods.id]
+  }),
+  tag: one(tags, {
+    fields: [tagOnMods.tagId],
+    references: [tags.id]
+  })
+}));
