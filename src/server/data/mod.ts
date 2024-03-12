@@ -34,12 +34,17 @@ export async function updateModSummaryById(id: string, summary: string) {
   await db.update(mods).set({ summary }).where(eq(mods.id, id));
 }
 
-export async function getModsByQueryNameIncludeOwner(query: string | undefined, limit: number) {
+export async function getModsByQueryNameIncludeOwnerIncludeTagOnMod(limit: number, query?: string,  categories?: string | string[]) {
   return await db.query.mods.findMany({
     limit,
     where: query ? (mods, { eq }) => eq(mods.name, query) : undefined,
     with: {
-      owner: true
+      owner: true,
+      tags: {
+        with: {
+          tag: true
+        }
+      }
     }
   });
 }
