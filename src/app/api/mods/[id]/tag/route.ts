@@ -34,7 +34,7 @@ export async function POST(request: NextRequest, { params: { id } }: { params: {
 
     await createTagOnMod(id, tag.id);
 
-    console.log(`[ERROR][POST_MOD_TAG] Mod tag added. Mod name: '${mod.name}', Tag name: '${tag.name}'`);
+    console.log(`[INFO][POST_MOD_TAG] Mod tag added. Mod name: '${mod.name}', Tag name: '${tag.name}'`);
 
     return NextResponse.json({ message: "Tag added" }, { status: 200 });
   }
@@ -74,7 +74,7 @@ export async function DELETE(request: NextRequest, { params: { id } }: { params:
 
     await deleteTagOnMod(tag.id);
 
-    console.log(`[ERROR][DELETE_MOD_TAG] Mod tag deleted. Mod name: '${mod.name}', Tag name: '${tag.name}'`);
+    console.log(`[INFO][DELETE_MOD_TAG] Mod tag deleted. Mod name: '${mod.name}', Tag name: '${tag.name}'`);
 
     return NextResponse.json({ message: "Tag removed" }, { status: 200 });
   }
