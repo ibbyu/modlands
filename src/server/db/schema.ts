@@ -121,7 +121,7 @@ export const mods = createTable("mod", {
     mode: "date",
   }).default(sql`CURRENT_TIMESTAMP(3)`).notNull(),
   downloads: integer("downloads").default(0).notNull(),
-  ownerId: varchar("ownerId", { length: 255 }),
+  ownerId: varchar("ownerId", { length: 255 }).references(() => users.id, { onDelete: "cascade"}),
 });
 
 export const modRelations = relations(mods, ({ one, many }) => ({
@@ -140,7 +140,7 @@ export const modExternalResources = createTable("modExternalResources", {
   source: varchar("source", { length: 255 }),
   wiki: varchar("wiki", { length: 255 }),
   discord: varchar("disord", { length: 255 }),
-  modId: varchar("modId", { length: 255}).notNull().unique()
+  modId: varchar("modId", { length: 255}).notNull().unique().references(() => mods.id, { onDelete: "cascade"})
 });
 
 export const modExternalResourcesRelations = relations(modExternalResources, ({ one }) => ({
@@ -158,7 +158,7 @@ export const versions = createTable("version", {
   type: modTypeEnum("type").notNull(),
   description: json("description").notNull(),
   downloadUrl: varchar("downloadUrl", { length: 255 }).notNull(),
-  modId: varchar("modId", { length: 255}).notNull(),
+  modId: varchar("modId", { length: 255}).notNull().references(() => mods.id, { onDelete: "cascade"}),
   published: timestamp("published", {
     mode: "date",
   }).default(sql`CURRENT_TIMESTAMP`).notNull(),
@@ -183,8 +183,9 @@ export const tagRelations = relations(tags, ({ many }) => ({
 }));
 
 export const tagOnMods = createTable("tagOnMod", {
-  modId: varchar("modId", { length: 255 }).notNull(),
-  tagId: varchar("tagId", { length: 255 }).notNull()
+  id: varchar("id", { length: 255 }).notNull().primaryKey(),
+  tagId: varchar("tagId", { length: 255 }).notNull().references(() => tags.id, { onDelete: "cascade"}),
+  modId: varchar("modId", { length: 255 }).notNull().references(() => mods.id, { onDelete: "cascade"}),
 });
 
 export const tagOnModsRelations = relations(tagOnMods, ({ one }) => ({
