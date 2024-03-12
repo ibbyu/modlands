@@ -89,7 +89,9 @@ export async function getModBySlugWithVersions(slug: string) {
   return await db.query.mods.findFirst({
     where: (mods, { eq }) => eq(mods.slug, slug),
     with: {
-      versions: true
+      versions: {
+        orderBy: (versions, { desc }) => [desc(versions.published)],
+      }
     }
   });
 }

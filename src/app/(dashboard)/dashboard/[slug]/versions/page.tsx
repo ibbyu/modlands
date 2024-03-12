@@ -30,7 +30,8 @@ const ModVersionsPages = async ({ params }: Props) => {
 
   return (
     <div className='flex flex-col gap-4'>
-      <div className='flex justify-end'>
+      <div className='flex justify-between'>
+        <h1 className='text-2xl'>Versions</h1>
         <Link href={`/dashboard/${mod.slug}/versions/new`} className={buttonVariants({ variant: "default" })}>New version</Link>
       </div>
       <VersionTable columns={columns} data={mod.versions} />

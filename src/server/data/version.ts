@@ -15,3 +15,9 @@ export async function createVersion(title: string, description: any, downloadUrl
     size
   });
 }
+
+export async function getVersionById(id: string) {
+  return await db.query.versions.findFirst({
+    where: (versions, { eq }) => eq(versions.id, id)
+  });
+}

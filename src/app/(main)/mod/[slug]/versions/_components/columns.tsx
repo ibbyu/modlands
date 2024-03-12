@@ -1,4 +1,5 @@
 "use client"
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
