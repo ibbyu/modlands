@@ -1,4 +1,5 @@
 import React from 'react';
+import { notFound } from 'next/navigation';
 
 import { getModBySlug } from '@/server/data/mod';
 import { getServerAuthSession } from '@/server/auth';
@@ -14,7 +15,7 @@ const DashboardModPage = async ({ params }: Props) => {
   const mod = await getModBySlug(params.slug);
 
   if (!mod) {
-    return <div className='w-full flex h-full justify-center items-center'>Mod not found</div>;
+    notFound();
   }
 
   return (

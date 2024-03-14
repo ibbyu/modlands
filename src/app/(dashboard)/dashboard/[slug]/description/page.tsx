@@ -1,4 +1,5 @@
 import React from 'react';
+import { notFound } from 'next/navigation';
 import { getServerAuthSession } from '@/server/auth';
 import { getModBySlug } from '@/server/data/mod';
 import UpdateDescriptionForm from './_components/update-description-form';
@@ -22,7 +23,7 @@ const DescriptionPage = async ({ params }: Props) => {
   const mod = await getModBySlug(params.slug);
 
   if (!session || session.user.id !== mod?.ownerId) {
-    return <div>404 not found</div>
+    notFound();
   }
 
   return (

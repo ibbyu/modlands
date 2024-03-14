@@ -1,4 +1,6 @@
 import React from 'react';
+import { notFound } from 'next/navigation';
+
 import { getServerAuthSession } from '@/server/auth';
 import { getModBySlug, getModBySlugExternalResourcesWithTags } from '@/server/data/mod';
 import UpdateIconCard from './_components/update-icon-card';
@@ -27,7 +29,7 @@ const DashboardModSettingsPage = async ({ params }: Props) => {
   const mod = await getModBySlugExternalResourcesWithTags(params.slug);
 
   if (!session || session.user.id !== mod?.ownerId) {
-    return <div>404 not found</div>
+    notFound();
   }
 
   const tags = await getTags();

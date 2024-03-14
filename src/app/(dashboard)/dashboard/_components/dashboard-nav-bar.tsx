@@ -4,13 +4,12 @@ import { redirect } from 'next/navigation';
 import { getServerAuthSession } from '@/server/auth';
 import NavAvatar from '@/components/nav-avatar';
 import Avatar from '@/components/avatar';
-import ToggleTheme from '@/components/toggle-theme';
 
 const DashboardNavbar = async () => {
   const session = await getServerAuthSession();
 
   if (!session) {
-    redirect("/");
+    redirect("/sign-in");
   }
 
   return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import { notFound } from 'next/navigation';
 import { getServerAuthSession } from '@/server/auth';
 import { getModBySlug, getModBySlugWithVersions } from '@/server/data/mod';
 import { VersionTable } from './_components/versions-table';
@@ -25,7 +26,7 @@ const ModVersionsPages = async ({ params }: Props) => {
   const mod = await getModBySlugWithVersions(params.slug);
 
   if (!session || session.user.id !== mod?.ownerId) {
-    return <div>404 not found</div>
+    notFound();
   }
 
   return (
