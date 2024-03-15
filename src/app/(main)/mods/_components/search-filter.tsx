@@ -18,15 +18,17 @@ interface Props {
   q?: string;
   page: number;
   totalMods: number;
+  orderBy: string;
 }
 
-const SearchFilter = ({ q, page, totalMods }: Props) => {
+const SearchFilter = ({ q, page, totalMods, orderBy }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const initialRender = useRef(true);
   const [text, setText] = useState(q ?? "");
   const [query] = useDebounce(text, 150);
+  const [order, setOrder] = useState(orderBy);
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -61,6 +63,19 @@ const SearchFilter = ({ q, page, totalMods }: Props) => {
     }
   }, [query]);
 
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+    
+    if (order === "relevant") {
+      router.push(pathname + '?' + deleteQueryString('o'));
+    } else {
+      router.push(pathname + '?' + createQueryString('o', order));
+    }
+  }, [order]);
+
   return (
     <div className='flex items-center'>
       <div className='relative rounded-md shadow-sm'>
@@ -87,7 +102,7 @@ const SearchFilter = ({ q, page, totalMods }: Props) => {
       <div className='pl-4'>{q && <Label>{totalMods} {totalMods === 1 ? "mod" : "mods"} found</Label>}</div>
       <div className='ml-auto'>
         <Label className='text-xs'>Sort by:</Label>
-        <Select defaultValue='relevant'>
+        <Select defaultValue={orderBy} onValueChange={setOrder}>
           <SelectTrigger className="w-[180px]">
             <SelectValue />
           </SelectTrigger>

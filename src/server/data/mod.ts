@@ -3,6 +3,7 @@ import { db } from "@/server/db";
 import { mods } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { v4 as uuidv4 } from 'uuid';
+import { desc  } from 'drizzle-orm';
 
 export async function getModBySlug(slug: string) {
   return await db.query.mods.findFirst({
@@ -34,10 +35,42 @@ export async function updateModSummaryById(id: string, summary: string) {
   await db.update(mods).set({ summary }).where(eq(mods.id, id));
 }
 
-export async function getModsByQueryNameIncludeOwnerIncludeTagOnMod(limit: number, query?: string,  categories?: string | string[]) {
+export async function getModsByQueryNameIncludeOwnerIncludeTagOnMod(limit: number, query?: string,  orderBy?: string) {
+  if (orderBy === "recent") {
+    return await db.query.mods.findMany({
+      limit,
+      where: query ? (mods, { like }) => like(mods.name, `%${query}%`) : undefined,
+      orderBy: (mods, { desc }) => [desc(mods.updatedAt)],
+      with: {
+        owner: true,
+        tags: {
+          with: {
+            tag: true
+          }
+        }
+      }
+    });
+  }
+
+  if (orderBy === "popular") {
+    return await db.query.mods.findMany({
+      limit,
+      where: query ? (mods, { like }) => like(mods.name, `%${query}%`) : undefined,
+      orderBy: (mods, { desc }) => [desc(mods.downloads)],
+      with: {
+        owner: true,
+        tags: {
+          with: {
+            tag: true
+          }
+        }
+      }
+    });
+  }
+
   return await db.query.mods.findMany({
     limit,
-    where: query ? (mods, { eq }) => eq(mods.name, query) : undefined,
+    where: query ? (mods, { like }) => like(mods.name, `%${query}%`) : undefined,
     with: {
       owner: true,
       tags: {

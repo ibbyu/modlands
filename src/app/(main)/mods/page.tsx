@@ -21,8 +21,9 @@ const ModsPage = async ({ searchParams }: Props) => {
   const q = typeof searchParams.q === "string" ? searchParams.q : undefined;
   const page = typeof searchParams.p === "string" ? Number(searchParams.p) : 1;
   const categories = typeof searchParams.c === "string" ? [searchParams.c] : Array.isArray(searchParams.c) ? searchParams.c : [];
-
-  const mods = await getModsByQueryNameIncludeOwnerIncludeTagOnMod(MODS_PER_PAGE, q);
+  const orderBy = typeof searchParams.o === "string" ? searchParams.o : "relevant";
+  
+  const mods = await getModsByQueryNameIncludeOwnerIncludeTagOnMod(MODS_PER_PAGE, q, orderBy);
 
   return (
     <div className='pt-16'>
@@ -31,7 +32,7 @@ const ModsPage = async ({ searchParams }: Props) => {
           <TagFilter activeTags={categories} />
         </div>
         <div className='w-full h-full md:col-span-6 rounded-2xl flex flex-col gap-4'>
-          <SearchFilter q={q} page={page} totalMods={mods.length} />
+          <SearchFilter q={q} page={page} totalMods={mods.length} orderBy={orderBy ?? "relevant"}/>
           <div className='flex flex-col gap-4 pb-5'>
             {mods.length > 0 ? mods.map(m => {
               if (categories.length > 0) {
